@@ -15,8 +15,11 @@ class WordTranslate extends Migration
     {
         Schema::create('word_translate', function($table) {
             $table->increments('id', true);
-            $table->integer('word_id')->unsigned();
-            $table->integer('translate_id')->unsigned();
+            $table->integer('word_first')->unsigned();
+            $table->foreign('word_first')->references('id')->on('words')->onDelete('cascade');
+            $table->integer('word_second')->unsigned();
+            $table->foreign('word_second')->references('id')->on('words')->onDelete('cascade');
+            $table->unique(array('word_first', 'word_second'));
         });
     }
 

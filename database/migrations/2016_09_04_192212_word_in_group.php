@@ -16,11 +16,8 @@ class WordInGroup extends Migration
         Schema::create('word_in_group', function($table) {
             $table->increments('id', true);
             $table->integer('word_id')->unsigned();
+            $table->foreign('word_id')->references('id')->on('words')->onDelete('cascade');
             $table->integer('group_id')->unsigned();
-        });
-
-        Schema::table('word_in_group', function($table) {
-            $table->foreign('word_id')->references('id')->on('words');
             $table->foreign('group_id')->references('id')->on('word_groups');
         });
     }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Words extends Migration
+class WordLang extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,16 @@ class Words extends Migration
      */
     public function up()
     {
-        Schema::create('words', function (Blueprint $table) {
+        Schema::create('word_lang', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('word')->index();
-            $table->integer('lang_id')->unsigned();
-            $table->timestamp('created_at')->useCurrent();
+            $table->string('lang');
         });
+
+        if (Schema::hasTable('words')) {
+            Schema::table('words', function (Blueprint $table) {
+                $table->foreign('lang_id')->references('id')->on('word_lang');
+            });
+        }
     }
 
     /**
@@ -31,5 +35,7 @@ class Words extends Migration
         if (Schema::hasTable('words')) {
             Schema::drop('words');
         }
+
+        Schema::drop('word_lang');
     }
 }
