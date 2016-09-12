@@ -19,6 +19,7 @@ Route::get('/', function () {
 
 Route::group(['prefix'  => 'api', 'middleware'  => 'auth:api'], function () {
     Route::resource('note', 'NoteController');
+    Route::resource('group', 'Api\GroupController');
 });
 
 
